@@ -9,20 +9,34 @@ import matplotlib.pyplot as plt
 matplotlib.use('Agg')
 import datetime as dt
 import matplotlib.dates as mdates
+from configparser import SafeConfigParser
+import os
 print("done loading modules")
+
+# Config file location has to be static
+CONFIG_FILE=os.path.expanduser('~/Station/config/config.ini')
+
+print("opening config file")
+config = SafeConfigParser()
+# print(CONFIG_FILE)
+config.read(CONFIG_FILE)
+
 
 print("setting location of files")
 #databases
 # to do - get database locations from config file
-SENSOR_DATABASE='/home/ashley/Python/Python/station/app/db/sensor.db'
-WEATHER_DATABASE='/home/ashley/Python/Python/station/app/db/weather.db'
-GRAPH_ROOT='/home/ashley/Python/Python/station/app/static/Graphs/'
+SENSOR_DATABASE=config.get('files','SensorDatabase')
+WEATHER_DATABASE=config.get('files','WeatherDatabase')
+GRAPH_ROOT=config.get('folder','Graph')
+
+print(SENSOR_DATABASE)
 
 print("setting variables")
 
 # variables
 
-HistHours = abs(6) # to do make configurable in config file. Make sure it's positive too
+HistHours = abs(int(config.get('plotting','HistoryHours'))) # to do make configurable in config file. Make sure it's positive too
+# print(HistHours)
 
 var = 1
 
