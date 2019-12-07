@@ -1,0 +1,121 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href={{ url_for('static', filename='style.css') }}>
+		<title>{{ title }}</title>
+		<meta http-equiv="refresh" content="300" />
+		<script type="text/javascript">
+    			<!--
+    			function updateTime() {
+        		var currentTime = new Date();
+        		var hours = currentTime.getHours();
+        		var minutes = currentTime.getMinutes();
+        		var seconds = currentTime.getSeconds();
+        		if (minutes < 10){
+            			minutes = "0" + minutes;
+        		}
+        		if (seconds < 10){
+       				seconds = "0" + seconds;
+        		}
+        		var v = hours + ":" + minutes + ":" + seconds + " ";
+        	        setTimeout("updateTime()",1000);
+        		document.getElementById('time').innerHTML=v;
+    			}
+    			updateTime();
+    			//-->
+		</script>
+	
+	</head>
+ 
+ <body>
+	<h1> {{ DayofWeek }} {{ '%02d' % tDay }}/{{ '%02d' % tMonth }}/{{ tYear }} <br></h1>
+	<h1> <span id="time" /> </h1>
+	<table>
+	<tr>
+		<td><h1>Sun</h1></td>
+		<td>&nbsp</td>
+		<td>&nbsp</td>
+	<tr>
+		<td><h0><b>Rise:</b> {{ Sunrise }}</h0></td>
+		<td><h0><b>Civil Twilight:</b> {{ RiseCivil }}</h0></td>
+		<td>&nbsp</td>
+	</tr>
+
+	<tr>
+		
+		<td><h0><b>Set:</b> {{ Sunset }}</h0></td>		
+		<td><h0><b>Civil Twilight:</b> {{ SetCivil }}</h0></td>
+		<td>&nbsp</td>
+	</tr>
+	<tr>
+		<td>&nbsp</td>
+		<td>&nbsp</td>
+		<td>&nbsp</td>
+	</tr>
+	<tr>
+		<td><h1>Moon</h1></td>
+		<td>&nbsp</td>
+		<td>&nbsp</td>
+	</tr>
+	<tr>
+		<td><h0><b>Phase:</b> {{ tMoonPhase }}</h0></td>
+		<td><h0><b>Age:</b> {{ tMoonAge }} day(s)</h0></td>
+		<td>&nbsp</td>
+	</tr>
+	<tr>
+		<td>&nbsp</td>
+		<td>&nbsp</td>		
+		<td>&nbsp</td>
+	</tr>
+	<tr>
+		<td><h1>Weather</h1></td>
+		<td>&nbsp</td>
+		<td>&nbsp</td>
+	</tr>
+	<tr>
+		<td><h0><b>Temp:</b> {{ Temperature }} 'C </h0></td>
+		<td><h0><b>Feels Like:</b> {{ RTemperature }} 'C </h0></td>
+		<td><h0><b>Wind:</b> {{ Wind }} mph {{ WindText}}</h0></td>
+	</tr>
+	<tr>
+		<td><h0><b>Pressure:</b> {{ Pressure }} mb ({{ PressureTrend }}) </h0></td>
+		<td><h0><b>Humidity:</b> {{ Humidity }} % </h0></td>
+		<td><h0><b>UV Index:</b> {{ UVIndex }} </h0></td>	
+	</table><br>
+	<h1>Forecast</h1>
+	<table>
+		<tr>
+			<td style="width:10%;">&nbsp</td>
+			<td><h0><b>{{ fday[0] }}</b><h0></td>
+			<td><h0><b>{{ fday[1] }}</b><h0></td>
+			<td><h0><b>{{ fday[2] }}</b><h0></td>
+			<td><h0><b>{{ fday[3] }}</b><h0></td>
+		</tr>
+		<tr>
+			<td style="width:10%;"><h0><b>High / Low</b><h0></td>
+			<td><h0>{{ ftemph[0] }} 'C / {{ ftempl[0] }} 'C<h0></td>
+			<td><h0>{{ ftemph[1] }} 'C / {{ ftempl[1] }} 'C<h0></td>
+			<td><h0>{{ ftemph[2] }} 'C / {{ ftempl[2] }} 'C<h0></td>
+			<td><h0>{{ ftemph[3] }} 'C / {{ ftempl[3] }} 'C<h0></td>
+		</tr>		
+		<tr>
+			<td style="width:10%;" rowspan="2"><h0><b>Weather</b><h0></td>
+			<td><h0>{{ fcondd[0] }}<h0></td>
+			<td><h0>{{ fcondd[1] }}<h0></td>
+			<td><h0>{{ fcondd[2] }}<h0></td>
+			<td><h0>{{ fcondd[3] }}<h0></td>
+		</tr>	
+		<tr>
+			
+			<td><h0>{{ fcondn[0] }}<h0></td>
+			<td><h0>{{ fcondn[1] }}<h0></td>
+			<td><h0>{{ fcondn[2] }}<h0></td>
+			<td><h0>{{ fcondn[3] }}<h0></td>
+		</tr>	
+		
+	</table>
+	
+
+	<br><h0>Updated on: {{ UpdateTime }} </h0></br>
+	
+  </body>
+</html>

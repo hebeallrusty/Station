@@ -1,0 +1,22 @@
+{% block SensorCurrentHistory %}
+	<h1>Sensor History</h1>
+
+	<img id="SensorTemp"><br>
+	<img id="SensorPressure"><br>
+	<img id="SensorHumidity"><br>
+	<script type="text/javascript">
+	function update_graph_sensor_values() {
+		var d = new Date();
+		var cache = d.getTime();
+		$('#SensorTemp').attr('src', '/static/Graphs/temperature.png?'+cache);
+		$('#SensorPressure').attr('src', '/static/Graphs/pressure.png?'+cache);
+		$('#SensorHumidity').attr('src', '/static/Graphs/humidity.png?'+cache);
+		
+        }
+	</script>
+	<script type="text/javascript">
+		window.onload=update_graph_sensor_values()
+		var upd=setInterval(function(){ update_graph_sensor_values() },60000);
+		
+	</script>
+{% endblock SensorCurrentHistory %}

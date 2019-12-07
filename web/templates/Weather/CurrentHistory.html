@@ -1,0 +1,51 @@
+{% block CurrentHistory %}
+	<h1>History</h1>
+	<!-- <table>
+		<tr>
+			<td style="width:10%;">&nbsp</td>
+			<td style="text-align:center;"><h0><b>Last 6 Hrs</b><h0></td>
+			<td style="text-align:center;"><h0><b>Last 12 Hrs</b><h0></td>
+			<td style="text-align:center;"><h0><b>Last 24 Hrs</b><h0></td>
+			<td style="text-align:center;"><h0><b>Last Year</b><h0></td>
+		</tr>
+		<tr>
+			<td style="text-align:left; rowspan:2; width:10%"><h0><b>Max</b><h0></td>
+			<td style="text-align:center; rowspan:2"><h00> MaxTemp[0][0]'C<br><h00></td>
+			<td style="text-align:center; rowspan:2"><h00> MaxTemp[1][0]'C<br><h00></td>
+			<td style="text-align:center; rowspan:2"><h00> MaxTemp[2][0]'C<br><h00></td>
+			<td style="text-align:center; rowspan:2"><h00> MaxTemp[3][0]'C <br>( MaxTemp[3][1] )<h00></td>
+			
+		</tr>		
+		<tr>
+			<td style="text-align:left; rowspan:2; width:10%"><h0><b>Min</b><h0></td>
+			<td style="text-align:center; rowspan:2"><h00> MinTemp[0][0]'C<br><h00></td>
+			<td style="text-align:center; rowspan:2"><h00> MinTemp[1][0]'C<br><h00></td>
+			<td style="text-align:center; rowspan:2"><h00> MinTemp[2][0]'C<br><h00></td>
+			<td style="text-align:center; rowspan:2"><h00> MinTemp[3][0]'C <br>( MinTemp[3][1]) <h00></td>
+		</tr>	
+		<tr>
+			<td style="width:10%;"><h0><b>&nbsp</b><h0></td>
+			<td><h0>&nbsp<h0></td>
+			<td><h0>&nbsp<h0></td>
+			<td><h0>&nbsp<h0></td>
+		</tr>	
+		
+	</table>
+
+	<br> -->
+	<img id="WeatherTemp">
+	<script type="text/javascript">
+	function update_graph_values() {
+		var d = new Date();
+		var cache = d.getTime();
+		$('#WeatherTemp').attr('src', '/static/Graphs/WeatherTemp.png?'+cache);
+		
+		
+        }
+	</script>
+	<script type="text/javascript">
+		window.onload=update_graph_values()
+		var upd=setInterval(function(){ update_graph_values() },60000);
+		
+	</script>
+{% endblock CurrentHistory %}

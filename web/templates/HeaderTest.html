@@ -1,0 +1,8 @@
+{% block Header %}
+	<script type="text/javascript" src={{ url_for('static', filename='js/date_time.js') }}></script>
+	<script type="text/javascript" src={{ url_for('static', filename='js/jquery-3.0.0.min.js') }}></script>
+	<h0><div id="date_time"></div></h0>
+        <script type="text/javascript">window.onload = date_time('date_time');</script>	
+{% endblock Header %}
+
+

@@ -1,0 +1,32 @@
+{% block MoonDash %}
+	<h1>Moon</h1>
+	<table>
+	<tr>
+		<td align="center"><h0><span id="tMoonPhase"></span></h0><br><img id="Phaseimg"><br><h00><span id="tMoonAge"></span> day(s)</h00></td>
+		<td>&nbsp</td>
+		<td><h0>&nbsp</h0></td>
+	</tr>
+	</table>
+	<!-- Ajax script to fetch values from holding webpage -->
+	<script type="text/javascript">
+	function update_moon_values() {
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		$.getJSON($SCRIPT_ROOT+"/AJAX_Moon",
+			function(data) {
+			$("#tMoonPhase").text(data.tMoonPhase)
+			$("#tMoonAge").text(data.tMoonAge)
+			$('#Phaseimg').attr('src', '/static/image/Moon/'+ data.tMoonPhase + '.svg')
+			});
+		
+		
+        }
+	</script>
+
+	<script type="text/javascript">
+		window.onload=update_moon_values()
+		var upd=setInterval(function(){ update_moon_values() },60000);
+		
+	</script>
+
+
+{% endblock MoonDash %}

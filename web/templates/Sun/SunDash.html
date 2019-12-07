@@ -1,0 +1,45 @@
+{% block SunDash %}
+	<h1>Sun</h1>
+	<table>
+	<tr>
+		<td align="center"><img src={{ url_for('static', filename='image/Sun/sunrise.svg') }} width="50"><br><h0><span id="Sunrise"></span></h0></td>
+		<!-- <td><h0><b>Rise:</b> {{ Sunrise }}</h0></td> -->
+		<td align="center"><img src={{ url_for('static', filename='image/Sun/dawn.svg') }} height="30"><br><h0><span id="RiseCivil"></span></h0></td>
+		<td align="center"><img src={{ url_for('static', filename='image/Sun/stars.svg') }} height="30"><br><h0><span id="SetNaut"></span></h0></td>
+		<td>&nbsp</td>
+	</tr>
+
+	<tr>
+		
+		<td align="center"><img src={{ url_for('static', filename='image/Sun/sunset.svg') }} width="50"><br><h0><span id="Sunset"></span></h0></td>		
+		<td align="center"><img src={{ url_for('static', filename='image/Sun/dusk.svg') }} height="30"><br><h0><span id="SetCivil"></span></h0></td>
+		<td align="center"><img src={{ url_for('static', filename='image/Sun/nostars.svg') }} height="30"><br><h0><span id="RiseNaut"></span></h0></td>
+		<td>&nbsp</td>
+	</tr>
+
+	</table>
+	<!-- Ajax script to fetch values from holding webpage -->
+	<script type="text/javascript">
+	function update_sun_values() {
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		$.getJSON($SCRIPT_ROOT+"/AJAX_Sun",
+			function(data) {
+			$("#Sunrise").text(data.Sunrise)
+			$("#RiseCivil").text(data.RiseCivil)
+			$("#RiseNaut").text(data.RiseNaut)
+			$("#Sunset").text(data.Sunset)
+			$("#SetCivil").text(data.SetCivil)
+			$("#SetNaut").text(data.SetNaut)
+			});
+		
+		
+        }
+	</script>
+
+	<script type="text/javascript">
+		window.onload=update_sun_values()
+		var upd=setInterval(function(){ update_sun_values() },60000);
+		
+	</script>
+
+{% endblock SunDash %}

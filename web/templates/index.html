@@ -1,0 +1,102 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href={{ url_for('static', filename='style.css') }}>
+		<script type="text/javascript" src={{ url_for('static', filename='js/date_time.js') }}></script>
+		<title>{{ title }}</title>
+		<meta http-equiv="refresh" content="300" />
+			
+	</head>
+ 
+ <body>
+	<h1a><span id="date_time"></span></h1a> <br>
+        <script type="text/javascript">window.onload = date_time('date_time');</script>	
+	<table>
+	<tr>
+		<td><h1>Sun</h1></td>
+		<td>&nbsp</td>
+		<td>&nbsp</td>
+	<tr>
+		<td align="center"><img src={{ url_for('static', filename='image/Sun/sunrise.svg') }} width="50"><br><h0>{{ Sunrise }}</h0></td>
+		<!-- <td><h0><b>Rise:</b> {{ Sunrise }}</h0></td> -->
+		<td align="center"><img src={{ url_for('static', filename='image/Sun/dawn.svg') }} height="30"><br><h0>{{ RiseCivil }}</h0></td>
+		<td align="center"><img src={{ url_for('static', filename='image/Sun/nostars.svg') }} height="30"><br><h0>{{ RiseNaut }}</h0></td>
+		<td>&nbsp</td>
+	</tr>
+
+	<tr>
+		
+		<td align="center"><img src={{ url_for('static', filename='image/Sun/sunset.svg') }} width="50"><br><h0>{{ Sunset }}</h0></td>		
+		<td align="center"><img src={{ url_for('static', filename='image/Sun/dusk.svg') }} height="30"><br><h0>{{ SetCivil }}</h0></td>
+		<td align="center"><img src={{ url_for('static', filename='image/Sun/stars.svg') }} height="30"><br><h0>{{ SetNaut }}</h0></td>
+		<td>&nbsp</td>
+	</tr>
+
+	</table>
+	<table>
+	<tr>
+		<td><h1>Moon</h1></td>
+		<td>&nbsp</td>
+		<td>&nbsp</td>
+	</tr>
+	<tr>
+		<td align="center"><h0>{{ tMoonPhase }}</h0><br><img src={{ url_for('static', filename='image/Moon/' + tMoonPhase + '.svg') }}><br><h00>{{ tMoonAge }} day(s)</h00></td>
+		<td>&nbsp</td>
+		<td><h0>&nbsp</h0></td>
+	</tr>
+	</table>
+	<table>
+	</tr>
+	<tr>
+		<td><h1>Current Weather</h1></td>
+		<td>&nbsp</td>
+		<td>&nbsp</td>
+	</tr>
+	<tr>
+		<td><h0><b>Temp:</b> {{ Temperature }} 'C </h0></td>
+		<td><h0><b>Feels Like:</b> {{ RTemperature }} 'C </h0></td>
+		<td>&nbsp</td>
+	</tr>
+	<tr>
+		<td><h0><b>Pressure:</b> {{ Pressure }} mb ({{ PressureTrend }}) </h0></td>
+		<td><h0><b>Humidity:</b> {{ Humidity }} % </h0></td>
+		<td>&nbsp</td>
+	<tr>
+		<td><h0><b>Wind:</b> {{ Wind }} mph {{ WindText}}</h0></td>
+		<td><h0><b>UV Index:</b> {{ UVIndex }} </h0></td>
+	</tr>
+	
+	</table><br>
+	<h1>Forecast</h1>
+	<table>
+		<tr>
+			<td style="width:10%;">&nbsp</td>
+			<td><h0><b>{{ fday[0] }}</b><h0></td>
+			<td><h0><b>{{ fday[1] }}</b><h0></td>
+			<td><h0><b>{{ fday[2] }}</b><h0></td>
+		</tr>
+		<tr>
+			<td style="width:10%;"><h0><b>High / Low</b><h0></td>
+			<td><h0>{{ ftemph[0] }} 'C / {{ ftempl[0] }} 'C<h0></td>
+			<td><h0>{{ ftemph[1] }} 'C / {{ ftempl[1] }} 'C<h0></td>
+			<td><h0>{{ ftemph[2] }} 'C / {{ ftempl[2] }} 'C<h0></td>
+		</tr>		
+		<tr>
+			<td style="width:10%;" rowspan="2"><h0><b>AM<br>PM</b><h0></td>
+			<td><h0>{{ fcondd[0] }}<h0></td>
+			<td><h0>{{ fcondd[1] }}<h0></td>
+			<td><h0>{{ fcondd[2] }}<h0></td>
+		</tr>	
+		<tr>
+			
+			<td><h0>{{ fcondn[0] }}<h0></td>
+			<td><h0>{{ fcondn[1] }}<h0></td>
+			<td><h0>{{ fcondn[2] }}<h0></td>
+		</tr>	
+		
+	</table>
+	
+
+	<br><h0>Updated on: {{ UpdateTime }} </h0></br>
+	
+  </body>
+</html>

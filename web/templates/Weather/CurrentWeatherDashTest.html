@@ -1,0 +1,18 @@
+{% block CurrentWeatherDash %} 
+	<table>
+	<tr>
+		<td><h3><b>Currently: </b><span id="CurrentCond"></span></h3></td>
+		<td><h3><b>Temp: </b><span id="Temperature"></span> 'C (<span id="RTemperature"></span> 'C)</h3></td>
+		<td rowspan="3"><img id="WeatherTemp" style="width:200;"> </td>
+		</tr>
+	<tr>
+		<td><h3><b>Wind: </b><span id="Wind"></span> mph <span id="WindText"></span></h3></td>
+		<td><h3><b>Humidity: </b><span id="Humidity"></span> % </h3></td>
+	<tr>
+
+		<td><h3><b>UV Index: </b><span id="UVIndex"></span></h3></td>
+	</tr>
+	
+	</table>
+
+{% endblock CurrentWeatherDash %}

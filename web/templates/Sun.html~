@@ -1,0 +1,21 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href={{ url_for('static', filename='style.css') }}>
+	</head>
+		<title>{{ title }}</title>
+		<meta http-equiv="refresh" content="3600" />
+	
+	</head>
+ 
+ <body>
+	<h1>Sunrise</h1>
+	<h0>Rise: <b> {{ Sunrise }} </b></h0></br>
+	<h0>Civil Twilight: <b> {{ RiseCivil }} </b> (when it's light) </h0> </br>
+	<h1>Sunset</h1>
+	<h0>Set: <b> {{ Sunset }} </b></h0> </br>
+	<h0>Civil Twilight: <b> {{ SetCivil }} </b> (when it's light) </h0> </br>
+	</br>
+	<h0>Updated on {{ UpdateTime }}
+	
+  </body>
+</html>

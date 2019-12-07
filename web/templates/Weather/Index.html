@@ -1,0 +1,9 @@
+{% extends "Base.html" %}
+{% block body %}
+	{% include './Weather/CurrentWeatherDash.html' %}
+	{% block CurrentWeatherDash %}{% endblock CurrentWeatherDash %}
+	<br>
+	{% include './Weather/CurrentHistory.html' %}
+	{% block CurrentHistory %}{% endblock CurrentHistory %}
+
+{% endblock body %}

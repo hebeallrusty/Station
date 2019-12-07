@@ -1,0 +1,98 @@
+@font-face{
+	font-family: Fancy;
+	src: url('/static/Fonts/Casper.ttf')
+}
+
+@font-face{
+	font-family: Digital;
+	src: url('/static/Fonts/Open 24 Display St.ttf')
+}
+
+body {
+    background-color: black;
+}
+
+h1 {
+	color: white;
+	margin-left: 0px;
+	font-family: Fancy;
+	font-size: 40px;
+	padding: 5px 0px 5px 0px;
+		
+}
+
+h1a {
+	color: white;
+	margin-left: 0px;
+	font-family: Digital;
+	font-size: 5em;
+	padding: 0px;
+	margin: 0px;
+}
+
+h0 {
+	color: white;
+	margin-left: 0px;
+	font-family: Fancy;
+	font-size: 30px;
+	padding-top: 5px;
+	
+
+}
+h00 {
+	color: white;
+	margin-left: 0px;
+	font-family: Fancy;
+	font-size: 25px;
+	padding-top: 5px;
+
+}
+
+tab { 
+	padding-left: 1em;
+}
+
+table {
+	border:1px;
+	background-color:#000000;
+	border-collapse:collapse;
+	border:1px solid #000000;
+	color:#FFFFFF;
+	width: 80%;
+}
+
+td {
+	width: 20%;
+}
+
+tr {
+	width: 50%;
+}
+
+a:link, a:visited {
+	color: black;
+	background-color: white;
+	text-decoration: none;
+	padding: 5px 5px;
+	text-align: center;
+}
+
+a:hover{
+	color: black;
+	background-color: yellow;
+	text-decoration: none;
+	padding: 5px 5px;
+	text-align: center;
+}
+
+a:active{
+	color: black;
+	background-color: green;
+	text-decoration: none;
+	padding: 5px 5px;
+	text-align: center;
+}
+
+img {
+	padding:5 0 5 0;
+}

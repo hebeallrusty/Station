@@ -1,0 +1,11 @@
+{% extends "Base.html" %}
+{% block body %}
+	{% include './Sun/SunDash.html' %}
+	{% block SunDash %} {% endblock SunDash %}
+	{% include './Moon/MoonDash.html' %}
+	{% block MoonDash %} {% endblock MoonDash %}
+	{% include './Weather/CurrentWeatherDash.html' %}
+	{% block CurrentWeatherDash %}{% endblock CurrentWeatherDash %}
+	{% include './Weather/ForecastDash.html' %}
+	{% block ForecastDash %}{% endblock ForecastDash %}
+{% endblock body %}

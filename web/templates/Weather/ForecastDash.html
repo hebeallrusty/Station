@@ -1,0 +1,63 @@
+{% block ForecastDash %}
+	<h1>Forecast</h1>
+	<table>
+		<tr>
+			<td style="width:10%;">&nbsp</td>
+			<td><h0><b><span id="fday0"></span></b><h0></td>
+			<td><h0><b><span id="fday1"></span></b><h0></td>
+			<td><h0><b><span id="fday2"></span></b><h0></td>
+		</tr>
+		<tr>
+			<td style="width:10%;"><h0><b>High / Low</b><h0></td>
+			<td><h0><span id="ftemph0"></span> 'C / <span id="ftempl0"></span> 'C<h0></td>
+			<td><h0><span id="ftemph1"></span> 'C / <span id="ftempl1"></span> 'C<h0></td>
+			<td><h0><span id="ftemph2"></span> 'C / <span id="ftempl2"></span> 'C<h0></td>
+		</tr>		
+		<tr>
+			<td style="width:10%;"><h0><b>AM</b><h0></td>
+			<td><h0><span id="fcondd0"></span><h0></td>
+			<td><h0><span id="fcondd1"></span><h0></td>
+			<td><h0><span id="fcondd2"></span><h0></td>
+		</tr>	
+		<tr>
+			<td style="width:10%;"><h0><b>PM</b><h0></td>
+			<td><h0><span id="fcondn0"></span><h0></td>
+			<td><h0><span id="fcondn1"></span><h0></td>
+			<td><h0><span id="fcondn2"></span><h0></td>
+		</tr>	
+		
+	</table>
+
+	<!-- Ajax script to fetch values from holding webpage -->
+	<script type="text/javascript">
+	function update_weatherforecast_values() {
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		$.getJSON($SCRIPT_ROOT+"/AJAX_Weather",
+			function(data) {
+			$("#fday0").text(data.fday[0])
+			$("#fday1").text(data.fday[1])
+			$("#fday2").text(data.fday[2])
+			$("#ftemph0").text(data.ftemph[0])
+			$("#ftemph1").text(data.ftemph[1])
+			$("#ftemph2").text(data.ftemph[2])
+			$("#ftempl0").text(data.ftempl[0])
+			$("#ftempl1").text(data.ftempl[1])
+			$("#ftempl2").text(data.ftempl[2])
+			$("#fcondd0").text(data.fcondd[0])
+			$("#fcondd1").text(data.fcondd[1])
+			$("#fcondd2").text(data.fcondd[2])
+			$("#fcondn0").text(data.fcondn[0])
+			$("#fcondn1").text(data.fcondn[1])
+			$("#fcondn2").text(data.fcondn[2])
+			});
+		
+		
+        }
+	</script>
+
+	<script type="text/javascript">
+		window.onload=update_weatherforecast_values()
+		var upd=setInterval(function(){ update_weatherforecast_values() },30000);
+		
+	</script>
+{% endblock ForecastDash %}

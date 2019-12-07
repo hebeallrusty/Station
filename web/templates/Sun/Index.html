@@ -1,0 +1,28 @@
+{% extends "Base.html" %}
+{% block body %}
+	{% include './Sun/SunDash.html' %}
+	{% block SunDash %} {% endblock SunDash %}
+	<br>
+	<h0>There are {{ daylight }} hours</h0>
+	
+	<script type="text/javascript">
+	function update_values() {
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		$.getJSON($SCRIPT_ROOT+"/TestPage",
+			function(data) {
+			$("#Sunrise").text(data.Sunrise)
+			$("#RiseCivil").text(data.RiseCivil)			
+			});
+		
+		
+        }
+	</script>
+	<h1a><div id="Sunrise"></div></h1a><br>
+	<h1a><div id="RiseCivil"></div></h1a>	
+	<!--<script type="text/javascript">
+		window.onload=update_values()
+		var upd=setInterval(function(){ update_values() },1000);
+		
+		</script>	 -->
+	<br>
+{% endblock body %}

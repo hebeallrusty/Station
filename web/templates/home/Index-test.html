@@ -1,0 +1,127 @@
+{% extends "BaseTest.html" %}
+{% block body %}
+<table>
+  <tr style="border:2px solid;">
+    <td style="border:2px solid;"><h1 style="display:inline;">Wired Sensor</h1><h3 style="display:inline;">(<span id="WWupdate"></span>)</h3>
+	{% include './Sensor/WiredDashTest.html' %}
+	{% block WiredSensorDash %} {% endblock WiredSensorDash %}</td>
+    <td style="border:2px solid;"><h1>Sun</h1>	
+	{% include './Sun/SunDashTest.html' %}
+	{% block SunDash %} {% endblock SunDash %}</td>
+  </tr>
+  <tr style="border:2px solid;">
+    <td style="border:2px solid;"><h1 style="display:inline;">Wireless Sensor</h1><h3 style="display:inline;">(<span id="Wupdate"></span>)</h3>
+	{% include './Sensor/WirelessDashTest.html' %}
+	{% block WirelessSensorDash %} {% endblock WirelessSensorDash %}</td>
+    <td style="border:2px solid;"><h1>Moon</h1>
+	{% include './Moon/MoonDashTest.html' %}
+	{% block MoonDash %} {% endblock MoonDash %}</td>
+  </tr>
+  <tr style="border:2px solid;">
+    <td colspan="2" style="border:2px solid;"><h1>Current Weather</h1>	
+	{% include './Weather/CurrentWeatherDashTest.html' %}
+	{% block CurrentWeatherDash %}{% endblock CurrentWeatherDash %}</td>
+
+  </tr>
+  <tr style="border:2px solid;">
+    <td colspan="2" style="border:2px solid;"><h1>Forecast</h1>
+	{% include './Weather/ForecastDashTest.html' %}
+	{% block ForecastDash %}{% endblock ForecastDash %}</td>
+  </tr>
+</table>
+ 
+
+
+	<!-- Ajax script to fetch values from holding webpage  -->
+	<script type="text/javascript">
+	function update_text_values() {
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		$.getJSON($SCRIPT_ROOT+"/AJAX_Sensors",
+			function(data) {
+			$("#STemp").text(data.STemp)
+			$("#SHumidity").text(data.SHumidity)
+			$("#Wupdate").text(data.TTime)
+			$("#SPressure").text(data.SPressure)
+			$("#WTemp").text(data.WTemp)
+			$("#WHumidity").text(data.WHumidity)
+			$("#WWupdate").text(data.WTime)
+			$("#WPressure").text(data.WPressure)
+			})
+		$.getJSON($SCRIPT_ROOT+"/AJAX_Sun",
+			function(data) {
+			$("#Sunrise").text(data.Sunrise)
+			$("#RiseCivil").text(data.RiseCivil)
+			$("#RiseNaut").text(data.RiseNaut)
+			$("#Sunset").text(data.Sunset)
+			$("#SetCivil").text(data.SetCivil)
+			$("#SetNaut").text(data.SetNaut)
+			})
+		$.getJSON($SCRIPT_ROOT+"/AJAX_Moon",
+			function(data) {
+			$("#tMoonPhase").text(data.tMoonPhase)
+			$("#tMoonAge").text(data.tMoonAge)
+			$('#Phaseimg').attr('src', '/static/image/Moon/'+ data.tMoonPhase + '.svg')
+			})
+		$.getJSON($SCRIPT_ROOT+"/AJAX_Weather",
+			function(data) {
+			$("#CurrentCond").text(data.CurrentCond)
+			$("#Temperature").text(data.Temperature)
+			$("#RTemperature").text(data.RTemperature)
+			$("#Wind").text(data.Wind)	
+			$("#WindText").text(data.WindText)
+			$("#Humidity").text(data.Humidity)
+			$("#UVIndex").text(data.UVIndex)
+			})
+		$.getJSON($SCRIPT_ROOT+"/AJAX_Weather",
+			function(data) {
+			$("#fday0").text(data.fday[0])
+			$("#fday1").text(data.fday[1])
+			$("#fday2").text(data.fday[2])
+			$("#ftemph0").text(data.ftemph[0])
+			$("#ftemph1").text(data.ftemph[1])
+			$("#ftemph2").text(data.ftemph[2])
+			$("#ftempl0").text(data.ftempl[0])
+			$("#ftempl1").text(data.ftempl[1])
+			$("#ftempl2").text(data.ftempl[2])
+			$("#fcondd0").text(data.fcondd[0])
+			$("#fcondd1").text(data.fcondd[1])
+			$("#fcondd2").text(data.fcondd[2])
+			$("#fcondn0").text(data.fcondn[0])
+			$("#fcondn1").text(data.fcondn[1])
+			$("#fcondn2").text(data.fcondn[2])
+			});
+		
+		
+        }
+	</script>
+
+	<script type="text/javascript">
+		window.onload=update_text_values()
+		var upd=setInterval(function(){ update_text_values() },30010);
+		
+	</script>
+
+	<!-- Ajax script to add pics to placeholders  -->
+	<script type="text/javascript">
+	function update_graph_values() {
+		var d = new Date();
+		var cache = d.getTime();
+		$('#SensorTemp').attr('src', '/static/Graphs/temperatureonehr.png?'+cache);
+		$('#SensorPressure').attr('src', '/static/Graphs/pressureonehr.png?'+cache);
+		$('#SensorHumidity').attr('src', '/static/Graphs/humidityonehr.png?'+cache);
+		$('#WiredTemp').attr('src', '/static/Graphs/wtemperatureonehr.png?'+cache);
+		$('#WiredPressure').attr('src', '/static/Graphs/wpressureonehr.png?'+cache);
+		$('#WiredHumidity').attr('src', '/static/Graphs/whumidityonehr.png?'+cache);
+		$('#WeatherTemp').attr('src', '/static/Graphs/WeatherTemp.png?'+cache);	
+        }
+	</script>
+	<script type="text/javascript">
+		window.onload=update_graph_values()
+		var upd=setInterval(function(){ update_graph_values() },30002);
+		
+	</script>
+
+
+
+	
+{% endblock body %}

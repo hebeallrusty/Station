@@ -1,0 +1,42 @@
+{% block CurrentWeatherDash %} 
+	<h1>Current Weather</h1>
+	<table>
+	<tr>
+		<td><h0><b>Currently: </b><span id="CurrentCond"></span></h0></td>
+		<td><h0><b>Temp: </b><span id="Temperature"></span> 'C (<span id="RTemperature"></span> 'C)</h0></td>
+		</tr>
+	<tr>
+		<td><h0><b>Wind: </b><span id="Wind"></span> mph <span id="WindText"></span></h0></td>
+		<td><h0><b>Humidity: </b><span id="Humidity"></span> % </h0></td>
+	<tr>
+
+		<td><h0><b>UV Index: </b><span id="UVIndex"></span></h0></td>
+	</tr>
+	
+	</table>
+
+	<!-- Ajax script to fetch values from holding webpage -->
+	<script type="text/javascript">
+	function update_currentweather_values() {
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		$.getJSON($SCRIPT_ROOT+"/AJAX_Weather",
+			function(data) {
+			$("#CurrentCond").text(data.CurrentCond)
+			$("#Temperature").text(data.Temperature)
+			$("#RTemperature").text(data.RTemperature)
+			$("#Wind").text(data.Wind)	
+			$("#WindText").text(data.WindText)
+			$("#Humidity").text(data.Humidity)
+			$("#UVIndex").text(data.UVIndex)
+			});
+		
+		
+        }
+	</script>
+
+	<script type="text/javascript">
+		window.onload=update_currentweather_values()
+		var upd=setInterval(function(){ update_currentweather_values() },30000);
+		
+	</script>
+{% endblock CurrentWeatherDash %}

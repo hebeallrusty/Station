@@ -1,0 +1,18 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href={{ url_for('static', filename='./css/style.css') }}>
+		<title>{{ title }}</title>
+		<!-- <meta http-equiv="refresh" content="300" /> -->
+			
+	</head>
+ 
+ <body>
+	{% include 'Header.html' %}
+	{% block Header %} {% endblock Header %}
+	{% block body %} {% endblock body %}
+
+	<br><h00>Updated on: {{ UpdateTime }} </h00></br>
+	<h00>{{ failure }} </h00>
+	
+  </body>
+</html>

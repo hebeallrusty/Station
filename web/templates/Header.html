@@ -1,0 +1,42 @@
+{% block Header %}
+	<script type="text/javascript" src={{ url_for('static', filename='js/date_time.js') }}></script>
+	<script type="text/javascript" src={{ url_for('static', filename='js/jquery-3.0.0.min.js') }}></script>
+	<h1a><div id="date_time"></div></h1a>
+        <script type="text/javascript">window.onload = date_time('date_time');</script>	
+
+
+	<br>
+	<nav>
+		<h0><b>
+			<a href="{{ url_for('home') }}">Home</a>
+			<a href="{{ url_for('sun') }}">Sun</a>
+			<a href="{{ url_for('weatherhistory') }}">Weather History</a>
+			<a href="{{ url_for('sensorhistory') }}">Sensor History</a></h0
+		></b>
+	</nav>
+	<br>
+	<h00>Temperature: <span id="STemp"></span>'C | Humidity: <span id="SHumidity"></span>% | Pressure <span id="SPressure"></span> mb</h00><br>
+
+	<!-- Ajax script to fetch values from holding webpage -->
+	<script type="text/javascript">
+	function update_sensor_values() {
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		$.getJSON($SCRIPT_ROOT+"/AJAX_Sensors",
+			function(data) {
+			$("#STemp").text(data.STemp)
+			$("#SHumidity").text(data.SHumidity)
+			$("#SPressure").text(data.SPressure)
+			});
+		
+		
+        }
+	</script>
+
+	<script type="text/javascript">
+		window.onload=update_sensor_values()
+		var upd=setInterval(function(){ update_sensor_values() },30000);
+		
+	</script>
+{% endblock Header %}
+
+
