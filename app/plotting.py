@@ -54,10 +54,10 @@ while var > 0:
 	db=sqlite3.connect(SENSOR_DATABASE)
 	c=db.cursor()
 	# read from wireless sensor database
-	c.execute("Select datetime(TTime,'localtime'),Temperature,Humidity,Pressure from LRoom where datetime(TTime,'localtime') between ? and ?;",(oDatePrev, oDateNow))
+	c.execute("Select datetime(TTime,'localtime'),Temperature,Humidity,Pressure from BME_280_1 where datetime(TTime,'localtime') between ? and ?;",(oDatePrev, oDateNow))
 	WirelessOutput=c.fetchall()
 	# read from wired sensor database
-	c.execute("Select datetime(TTime,'localtime'),Temperature,Humidity,Pressure from Wired where datetime(TTime,'localtime') between ? and ?;",(oDatePrev, oDateNow))
+	c.execute("Select datetime(TTime,'localtime'),Temperature,Humidity,Pressure from SENSORTAG_1 where datetime(TTime,'localtime') between ? and ?;",(oDatePrev, oDateNow))
 	WiredOutput=c.fetchall()
 	#print(output)
 	print("recevied results from Sensor DB")
@@ -66,7 +66,7 @@ while var > 0:
 # dito weather database
 	db=sqlite3.connect(WEATHER_DATABASE)
 	c=db.cursor()
-	c.execute("Select datetime(TTime,'localtime'),ATemp from Current where datetime(TTime,'localtime') between ? and ?;",(oDatePrev, oDateNow))
+	c.execute("Select datetime(TTime,'localtime'),Temperature from Current where datetime(TTime,'localtime') between ? and ?;",(oDatePrev, oDateNow))
 	WeatherOutput=c.fetchall()
 	db.close
 	print("recevied results from Weather DB")

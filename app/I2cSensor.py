@@ -1,43 +1,72 @@
-from app.Adafruit_BME280 import *
+# from adafruit website
+#import board
+#import busio
+#import adafruit_bme280
+
+from app.modules.Database.DBUtils import *
+
+# for sleeping the module
 import time
 import sqlite3
 from math import exp
 
-# database connection
-DATABASE='/home/pi/Python/station/app/db/sensor.db'
-MSL=194 # Elevation above sea level
+# for reading config files
+from configparser import SafeConfigParser
+import os
 
-#connect to wired sensor
-sensor = BME280(mode=BME280_OSAMPLE_8)
-var=1
+# config file location
+CONFIG_FILE=os.path.expanduser('~/Station/config/config.ini')
+
+# get info from config file
+config = SafeConfigParser()
+config.read(CONFIG_FILE)
+
+# database location
+DATABASE = config.get('files','SensorDatabase')
+print(DATABASE)
+
+# altitude for sea-level calcs later on
+MSL = int(config.get('location','MetersAboveSeaLevel'))
+
+# how often script should run (sleep time)
+UPDATE_INTERVAL = int(config.get('general','UpdateInterval'))
+
+
+# from adafruit website
+#i2c = busio.I2C(board.SCL, board.SDA)
+#bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
+
+# bme280 object can now be referenced for the sensor values
+
+
+var = 1
 # start loop
 while var > 0:
-	degrees = sensor.read_temperature()
-	pascals = sensor.read_pressure()
-	Pressure = pascals / 100
-	humidity = sensor.read_humidity()
+	
+	# commented out until it's possible to test on actual hardware
+	
+	#temperature = bme280.temperature()
+	#pressure = bme280.pressure()
+	#humidity = bme280.read_humidity()
 
+	# debug values - until tested on actual hardware with sensor
+	temperature = 25
+	pressure = 1005
+	humidity = 45
+	
 	#Adjust for sea level
-	pressure=Pressure/exp((-MSL)/((degrees+273.15)*29.263)) # adjust for sea level
+	SeaLevelPressure = pressure / exp((-MSL) / ((temperature + 273.15) * 29.263)) # adjust for sea level
 
-	try:
-		db=sqlite3.connect(DATABASE)
-		c=db.cursor()
-		c.execute("Insert into Wired(Temperature, Humidity, Pressure) values (?, ?, ?);",(float(degrees), float(humidity), float(pressure)))
-		db.commit()
-		db.close
-		#	#failure=-1
-	except:
-		failure=2
-		db.rollback
-		db.close	
-		#print(Temperature)
-		#print(Humidity)
-		#print(Pressure)	
+	# enter values into database	
+
+	db = db_connect(DATABASE)
+	insert_sensor(db, 'BME_280_1',temperature,humidity)
+	db.commit()
+	db.close
+	print("done")
 		
-		var=var+1
-		# wait for 10 secs for the next iteration
-	time.sleep(600)
+	# sleep before re-running the script
+	time.sleep(UPDATE_INTERVAL)
 
 
 
