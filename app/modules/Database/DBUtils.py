@@ -45,7 +45,25 @@ def insert_weather(con,table, temperature = None, humidity = None, pressure = No
 
 	return cur.lastrowid
 
-	
+def read_sensor(con,table,StartTime,EndTime):
+	# sanitise table name in case of SQL injection	
+	SafeTable = safe_table(table)
 
+	cur = con.cursor()
+	sql = "Select datetime(TTime,'localtime'),Temperature,Humidity,Pressure from " + SafeTable + " where datetime(TTime,'localtime') between ? and ?;"
+	cur.execute(sql,(StartTime, EndTime))
+	
+	return cur.fetchall()
+
+def read_weather(con,table,StartTime,EndTime):
+	# sanitise table name in case of SQL injection	
+	SafeTable = safe_table(table)
+
+	cur = con.cursor()	
+
+	sql = "Select datetime(TTime,'localtime'),Temperature from " + SafeTable + " where datetime(TTime,'localtime') between ? and ?;"
+	cur.execute(sql,(StartTime,EndTime))
+
+	return cur.fetchall()
 
 

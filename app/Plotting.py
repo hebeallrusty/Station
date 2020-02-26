@@ -1,16 +1,15 @@
 print("loading modules")
 import time
 #start_time=time.time()
-import sqlite3
 import matplotlib
 import matplotlib.pyplot as plt
-#import numpy as np
 # allow matplotlib to render pngs
 matplotlib.use('Agg')
 import datetime as dt
 import matplotlib.dates as mdates
 from configparser import SafeConfigParser
 import os
+from app.modules.Database.DBUtils import *
 print("done loading modules")
 
 # Config file location has to be static
@@ -49,26 +48,27 @@ while var > 0:
 	# PREV - this provides the history of the graphs
 	oDatePrev = oDateNow - dt.timedelta(hours=HistHours)
 	#############################################
-	# connect to sensor database - to do - remove to another module or even a class
+	# connect to sensor databas
 # connect to the sensor database and return the sensor data we need. The timestamps in the database are always GMT/UTC
-	db=sqlite3.connect(SENSOR_DATABASE)
-	c=db.cursor()
-	# read from wireless sensor database
-	c.execute("Select datetime(TTime,'localtime'),Temperature,Humidity,Pressure from BME_280_1 where datetime(TTime,'localtime') between ? and ?;",(oDatePrev, oDateNow))
-	WirelessOutput=c.fetchall()
+	db = db_connect(SENSOR_DATABASE)
+	# c=db.cursor()
 	# read from wired sensor database
-	c.execute("Select datetime(TTime,'localtime'),Temperature,Humidity,Pressure from SENSORTAG_1 where datetime(TTime,'localtime') between ? and ?;",(oDatePrev, oDateNow))
-	WiredOutput=c.fetchall()
-	#print(output)
+	WiredOutput = read_sensor(db,"BME_280_1",oDatePrev,oDateNow)
+	#print(WiredOutput[0])
+
+	# read from wireless sensor database
+	WirelessOutput = read_sensor(db,"SENSORTAG_1",oDatePrev,oDateNow)	
+	#print(WirelessOutput[0])
+
 	print("recevied results from Sensor DB")
 	db.close
 
 # dito weather database
-	db=sqlite3.connect(WEATHER_DATABASE)
-	c=db.cursor()
-	c.execute("Select datetime(TTime,'localtime'),Temperature from Current where datetime(TTime,'localtime') between ? and ?;",(oDatePrev, oDateNow))
-	WeatherOutput=c.fetchall()
+	db = db_connect(WEATHER_DATABASE)
+	WeatherOutput = read_weather(db,"Current",oDatePrev,oDateNow)
+	# print(WeatherOutput)
 	db.close
+
 	print("recevied results from Weather DB")
 
 	# now we have objects:
@@ -84,6 +84,7 @@ while var > 0:
 	#print(WeatherOutput)
 
 	print("convert output to manageable variables")	
+	# print(list(zip(*WiredOutput))[0])
 	# transpose rows to columns so that we can easily take all dates, all humidity's and all pressures from output from database
 	SensorDate=[list(zip(*WiredOutput))[0],list(zip(*WirelessOutput))[0]]
 	# print(SensorDate)

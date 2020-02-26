@@ -1,5 +1,13 @@
 # station
 
+Station is a Weather Station that polls data from OpenWeatherMap and gets real world Temperature, Pressure and Humidity data from a BME280 on an i2c interface, and a Texas Instruments Sensortag using Bluetooth.
+
+Station also generates useful information such as Sun rise / set and moon phase and presents all the information on a local webpage on it's own server (using Python Flask)
+
+Station is incomplete and currently won't run as-is, and is having the individual modules amended / tweaked before the webpage will work again. Also webpage will need re-writing to take account of module changes and design changes
+
+Original Station started life in Dec 2015 as a way to learn how to code in Python, and had been happily running since then, but the weather module has broken due to changes in the weather data provider no longer providing data
+
 Requires the following modules installed:
 
 matplotlib
@@ -25,8 +33,8 @@ Sensor Database
 	Future plans may increase wired sensors with additional "base stations"
 	
 	tables:
-		1SENORTAG
-		2BME_280
+		SENORTAG_1
+		BME_280_1
 	fields:
 		ID (ID Integer)
 		TTIme (Timestamp, not null, default current_timestamp)
