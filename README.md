@@ -13,6 +13,7 @@ Requires the following modules installed:
 matplotlib
 adafruit-circuitpython-bme280 (sudo pip3 install adafruit-circuitpython-bme280)
 python 3.6
+bluepy (sudo apt install libglib2.0-dev; sudo pip3 install bluepy)
 
 
 _______________________

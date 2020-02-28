@@ -37,6 +37,9 @@ print("setting variables")
 HistHours = abs(int(config.get('plotting','HistoryHours'))) # to do make configurable in config file. Make sure it's positive too
 # print(HistHours)
 
+# how often script should run (sleep time)
+UPDATE_INTERVAL = int(config.get('general','UpdateInterval'))
+
 var = 1
 
 while var > 0:
@@ -160,5 +163,5 @@ while var > 0:
 	
 	#print(time.time()-start_time)	
 	var=1
-	time.sleep(300)
+	time.sleep(UPDATE_INTERVAL)
 

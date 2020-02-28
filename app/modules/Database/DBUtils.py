@@ -21,7 +21,7 @@ def insert_sensor(con, table, temperature = None,humidity = None,pressure = None
 	
 	# sql statement to insert data into sensor db. Allow table name to be passed as argument for efficiency
 	sql = 'Insert into ' + SafeTable + '(Temperature, Humidity, Pressure) values (?, ?, ?);'
-	print(sql)
+	#print(sql)
 	cur = con.cursor()	
 
 	# execute sql statement and insert data into database
@@ -34,7 +34,7 @@ def insert_weather(con,table, temperature = None, humidity = None, pressure = No
 	SafeTable = safe_table(table)
 	
 	sql = 'Insert into ' + SafeTable + '(Temperature, Humidity, Pressure, Condition, WindSpeed, WindBearing, UVIndex) values (?, ?, ?, ?, ?, ?, ?);'
-	print(sql)
+	#print(sql)
 
 	cur = con.cursor()
 

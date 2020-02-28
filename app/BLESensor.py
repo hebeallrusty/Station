@@ -1,20 +1,41 @@
 import bluepy
 import time
-import sqlite3
-from math import exp
+#import sqlite3
+#from math import exp
+from app.modules.Utilities.PressureCalc import *
+from configparser import SafeConfigParser # for reading ini files
+import os
+from app.modules.Database.DBUtils import *
 
-# if multiple tags are available - specify Mac addresses
-MAC_LIVINGROOM='A0:E6:F8:B6:8C:80'
-# database connection
-DATABASE='/home/pi/Python/station/app/db/sensor.db'
-MSL=194 # Elevation above sea level
+# Config file location has to be static
+CONFIG_FILE=os.path.expanduser('~/Station/config/config.ini')
 
+#print("opening config file")
+config = SafeConfigParser()
+# open config file
+config.read(CONFIG_FILE)
+
+
+# get MAC Address of SensorTag (in config file)
+MAC_ADDRESS = config.get('SensorTag','MacAddress')
+
+# get location of Sensor Database
+DATABASE = config.get('files','SensorDatabase')
+
+# get location of 
+MSL = float(config.get('location','MetersAboveSeaLevel')) # Elevation above sea level
+
+# how often script should run (sleep time)
+UPDATE_INTERVAL = int(config.get('general','UpdateInterval'))
+
+
+# connect to tag
+tag=bluepy.sensortag.SensorTag(MAC_ADDRESS)
+var=1
+
+# if tag disconnects midway through processes, then very likely the tag connection has been disrupted and recovery is not likely
 try:
-	# connect to tag
-	tag=bluepy.sensortag.SensorTag(MAC_LIVINGROOM)
-	var=1
-
-
+	# loop to keep getting data from the Sensortag
 	while var > 0:
 		# enable sensors - temperature is included within barometer and humidity
 		tag.humidity.enable()
@@ -24,34 +45,26 @@ try:
 		tag.waitForNotifications(1.0)
 	
 		# read sensor data and assign it a variable
-		humidity=tag.humidity.read()
-		pressure=tag.barometer.read()
-	
-		#raw values as tuples - separate them out to meaningful variable names
-		Temperature=pressure[0]
-		Humidity=humidity[1]
-		Pressure=pressure[1]/exp((-MSL)/((pressure[0]+273.15)*29.263)) # adjust for sea level
-		print(pressure[0])
-		print(pressure[1])
-		try:
-			db=sqlite3.connect(DATABASE)
-			c=db.cursor()
-			c.execute("Insert into LRoom(Temperature, Humidity, Pressure) values (?, ?, ?);",(float(Temperature), float(Humidity), float(Pressure)))
-			db.commit()
-			db.close
-		#	#failure=-1
-		except:
-			failure=2
-			db.rollback
-			db.close	
+		# both humidity and pressure have their first value as the temperature. Temperature differs slightly between them. Take humidity's value.
+		humidity = tag.humidity.read()
 
-		#print(Temperature)
-		#print(Humidity)
-		#print(Pressure)	
+		# value is (temperature, humidity)
+		pressure = tag.barometer.read()
+		# value is (temperature, pressure). Pressure is local pressure and needs adjusted back to sea level so that it is comparable to met office values for example.
+		SeaPressure = SeaLevel(MSL,pressure[1],humidity[0])
 		
-		var=var+1
-		# wait for 10 secs for the next iteration
-		time.sleep(600)
+		# insert sensor values into database
+		db = db_connect(DATABASE)
+		insert_sensor(db, 'SENSORTAG_1',humidity[0],humidity[1],SeaPressure)
+		db.commit()
+		db.close		
+
+		
+		#shutdown the sensors until next iteration
+		tag.humidity.disable()
+		tag.barometer.disable()
+		
+		time.sleep(UPDATE_INTERVAL)
 except:
 	# disconnect from the sensor
 	tag.disconnect()
@@ -59,6 +72,3 @@ except:
 	del tag	
 	# disconnect from the sensor
 
-	
-#print(humidity)
-#print(pressure)

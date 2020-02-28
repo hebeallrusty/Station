@@ -4,10 +4,11 @@
 #import adafruit_bme280
 
 from app.modules.Database.DBUtils import *
+from app.modules.Utilities.PressureCalc import *
 
 # for sleeping the module
 import time
-import sqlite3
+
 from math import exp
 
 # for reading config files
@@ -45,9 +46,9 @@ while var > 0:
 	
 	# commented out until it's possible to test on actual hardware
 	
-	#temperature = bme280.temperature()
-	#pressure = bme280.pressure()
-	#humidity = bme280.read_humidity()
+	#temperature = bme280.temperature
+	#pressure = bme280.pressure
+	#humidity = bme280.humidity
 
 	# debug values - until tested on actual hardware with sensor
 	temperature = 25
@@ -55,12 +56,13 @@ while var > 0:
 	humidity = 45
 	
 	#Adjust for sea level
-	SeaLevelPressure = pressure / exp((-MSL) / ((temperature + 273.15) * 29.263)) # adjust for sea level
+	#SeaLevelPressure = pressure / exp((-MSL) / ((temperature + 273.15) * 29.263)) # adjust for sea level
+	SeaLevelPressure = SeaLevel(MSL,pressure,temperature)
 
 	# enter values into database	
 
 	db = db_connect(DATABASE)
-	insert_sensor(db, 'BME_280_1',temperature,humidity)
+	insert_sensor(db, 'BME_280_1',temperature,humidity,SeaLevelPressure)
 	db.commit()
 	db.close
 	print("done")
