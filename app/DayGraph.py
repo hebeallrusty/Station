@@ -172,6 +172,11 @@ ax.text(Noon,1.1,''.join(['Length Of Day: ', str(LengthOfDay.hour).zfill(2),":",
 plt.fill_between(xdnow, 0, y2,interpolate=True, color='blue')
 
 # autoformat the times
+
+
+# set x axis to show every month
+locator = mdates.HourLocator()
+plt.gca().xaxis.set_major_locator(locator)
 plt.gcf().autofmt_xdate()
 plt.gca().xaxis.set_major_formatter(xfmt)
 
