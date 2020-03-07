@@ -44,3 +44,13 @@ Sensor Database
 		Pressure(Real)
 		
 
+_____________________________
+Install notes
+install Raspbian. Make sure to update all software here
+use raspi-config to enable ssh, i2c, change hostname, customise keyboard  layout, reduce GPU memory to minimum. Boot to console (though with a screen this will need to change)
+reboot, configure network (nano /etc/network/interfaces; nano /etc/wpa_supplicant/wpa_supplicant.conf). Give it a static ip address
+install screen
+pip3 install matplotlib
+pip3 install adafruit-circuitpython-bme280
+pip3 install bluepy
+	add /home/pi/.local/bin to $PATH in ~/bash_profile

@@ -1,7 +1,7 @@
 # from adafruit website
-#import board
-#import busio
-#import adafruit_bme280
+import board
+import busio
+import adafruit_bme280
 
 from app.modules.Database.DBUtils import *
 from app.modules.Utilities.PressureCalc import *
@@ -34,8 +34,8 @@ UPDATE_INTERVAL = int(config.get('general','UpdateInterval'))
 
 
 # from adafruit website
-#i2c = busio.I2C(board.SCL, board.SDA)
-#bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
+i2c = busio.I2C(board.SCL, board.SDA)
+bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
 
 # bme280 object can now be referenced for the sensor values
 
@@ -46,14 +46,14 @@ while var > 0:
 	
 	# commented out until it's possible to test on actual hardware
 	
-	#temperature = bme280.temperature
-	#pressure = bme280.pressure
-	#humidity = bme280.humidity
+	temperature = bme280.temperature
+	pressure = bme280.pressure
+	humidity = bme280.humidity
 
 	# debug values - until tested on actual hardware with sensor
-	temperature = 25
-	pressure = 1005
-	humidity = 45
+	#temperature = 25
+	#pressure = 1005
+	#humidity = 45
 	
 	#Adjust for sea level
 	#SeaLevelPressure = pressure / exp((-MSL) / ((temperature + 273.15) * 29.263)) # adjust for sea level
