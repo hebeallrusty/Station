@@ -53,4 +53,15 @@ install screen
 pip3 install matplotlib
 pip3 install adafruit-circuitpython-bme280
 pip3 install bluepy
-	add /home/pi/.local/bin to $PATH in ~/bash_profile
+pip3 install pyowm
+add /home/pi/.local/bin to $PATH in ~/.bash_profile
+add PYTHONPATH=${PYTHONPATH}:/home/pi/Station to ~/.bash_profile
+install supervisor
+install config files into supervisor config directory
+sudo supervisorctrl reread
+sudo supervisorctrl update
+
+TODO 
+resolve path issues with my username and pi's username hardcoded into config files 
+fix issue with station vs Station when cloned from github
+safeconfigparser is to be depricated

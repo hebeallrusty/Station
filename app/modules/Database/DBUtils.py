@@ -1,6 +1,7 @@
 import sqlite3
 import re #regex
 
+
 # since db can be dangerous, only allow a-z, 0-9 and _ in table names
 RE_STRING='[^A-Za-z0-9_]+'
 
@@ -52,8 +53,15 @@ def read_sensor(con,table,StartTime,EndTime):
 	cur = con.cursor()
 	sql = "Select datetime(TTime,'localtime'),Temperature,Humidity,Pressure from " + SafeTable + " where datetime(TTime,'localtime') between ? and ?;"
 	cur.execute(sql,(StartTime, EndTime))
+
+	# set output to all the items returned
+	output = cur.fetchall()
+
+	# if the output is empty, return something meaningful
+	if output == []:
+		output = [("2020-01-01 00:00:00",None,None,None)]
 	
-	return cur.fetchall()
+	return output
 
 def read_weather(con,table,StartTime,EndTime):
 	# sanitise table name in case of SQL injection	
@@ -64,6 +72,13 @@ def read_weather(con,table,StartTime,EndTime):
 	sql = "Select datetime(TTime,'localtime'),Temperature from " + SafeTable + " where datetime(TTime,'localtime') between ? and ?;"
 	cur.execute(sql,(StartTime,EndTime))
 
-	return cur.fetchall()
+	# set output to all the items returned
+	output = cur.fetchall()
+
+	# if the output is empty, return something meaningful
+	if output == []:
+		output = [("2020-01-01 00:00:00",None)]
+	
+	return output
 
 

@@ -89,6 +89,9 @@ while var > 0:
 	print("convert output to manageable variables")	
 	# print(list(zip(*WiredOutput))[0])
 	# transpose rows to columns so that we can easily take all dates, all humidity's and all pressures from output from database
+
+	print("wiredoutput",WiredOutput)
+	print("wirelessoutput",WirelessOutput)
 	SensorDate=[list(zip(*WiredOutput))[0],list(zip(*WirelessOutput))[0]]
 	# print(SensorDate)
 
