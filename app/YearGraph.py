@@ -29,6 +29,8 @@ GRAPH_ROOT=config.get('folder','Graph')
 # how often script should run (sleep time)
 UPDATE_INTERVAL = int(config.get('general','UpdateInterval'))
 
+
+
 #print(location)
 # start loop over programme
 
@@ -38,6 +40,15 @@ while var > 0:
 
 	#get current date and time as a reference point
 	Now = dt.datetime.now()
+
+	#get seasons
+	
+	SPRING = dt.datetime(Now.year,int(config.get('seasons','Spring').split('/')[1]),int(config.get('seasons','Spring').split('/')[0]),0,0)
+	#print(SPRING)
+	SUMMER = dt.datetime(Now.year,int(config.get('seasons','Summer').split('/')[1]),int(config.get('seasons','Summer').split('/')[0]),0,0)
+	AUTUMN = dt.datetime(Now.year,int(config.get('seasons','Autumn').split('/')[1]),int(config.get('seasons','Autumn').split('/')[0]),0,0)
+	WINTER = dt.datetime(Now.year,int(config.get('seasons','Winter').split('/')[1]),int(config.get('seasons','Winter').split('/')[0]),0,0)
+
 	#print(Now)
 
 	# initialise x values
@@ -73,11 +84,11 @@ while var > 0:
 	fig, ax = plt.subplots()
 
 	# plot x and y values
-	ax.plot(x, y_RiseOfficial,'Orange')
-	ax.plot(x, y_SetOfficial,'Blue')
-	ax.plot(x, y_RiseCivil,'Green')
-	ax.plot(x, y_SetCivil,'Black')
-	ax.plot(x, y_Midday,'Yellow')
+	ax.plot(x, y_RiseOfficial,'navy',label = 'Rise/Set')
+	ax.plot(x, y_SetOfficial,'navy')
+	ax.plot(x, y_RiseCivil,'black',label = 'Dawn/Dusk')
+	ax.plot(x, y_SetCivil,'black')
+	ax.plot(x, y_Midday,'Gold', label = 'Noon')
 
 	# show vertical and horizontal gridlines
 	ax.grid(which='major', axis='x',linestyle='dotted')
@@ -86,6 +97,21 @@ while var > 0:
 
 	# show where we are in the year
 	plt.axvline(x=Now, color='red') # time now
+	# add in seasons lines
+	plt.axvline(x=SPRING,color = 'orange')
+	plt.axvline(x=SUMMER,color = 'orange')
+	plt.axvline(x=AUTUMN,color = 'orange')
+	plt.axvline(x=WINTER,color = 'orange')
+
+	# add in season text
+	ax.text(SPRING, dt.datetime(Now.year,1,1,12,0), 'Spring', ha='left', va='center', rotation=90)
+	ax.text(SPRING, dt.datetime(Now.year,1,1,12,0), 'Winter', ha='right', va='center', rotation=90)
+	ax.text(SUMMER, dt.datetime(Now.year,1,1,12,0), 'Summer', ha='left', va='center', rotation=90)
+	ax.text(SUMMER, dt.datetime(Now.year,1,1,12,0), 'Spring', ha='right', va='center', rotation=90)
+	ax.text(AUTUMN, dt.datetime(Now.year,1,1,12,0), 'Autumn', ha='left', va='center', rotation=90)
+	ax.text(AUTUMN, dt.datetime(Now.year,1,1,12,0), 'Summer', ha='right', va='center', rotation=90)
+	ax.text(WINTER, dt.datetime(Now.year,1,1,12,0), 'Winter', ha='left', va='center', rotation=90)
+	ax.text(WINTER, dt.datetime(Now.year,1,1,12,0), 'Autumn', ha='right', va='center', rotation=90)
 
 
 	#format the axis text
@@ -98,6 +124,9 @@ while var > 0:
 	plt.gca().xaxis.set_major_formatter(xfmt)
 	plt.gcf().autofmt_xdate()
 	plt.gca().yaxis.set_major_formatter(yfmt)
+
+	# add in legend below graph
+	ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1),ncol=3)
 
 	# save the plot
 	fig.savefig(''.join([GRAPH_ROOT,'Year','.png']),bbox_inches='tight')

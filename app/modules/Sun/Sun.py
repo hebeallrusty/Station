@@ -22,12 +22,12 @@ class Sun:
 		#print(location)
 		
 		# already cos(zenith) for step 7a below
-		#zenith ] 0.01454  # golden
+		#zenith ] 0.10472  # golden +6 degrees above horizon
 		#zenith = -0.01454 # official
 		#zenith = -0.10453 # civil
 		#zenith = -0.20791 # nautical
 		#zenith = -0.30902 # astronomical
-		zenith = [0.01454,-0.01454, -0.10453, -0.20791, -0.30902]
+		zenith = [0.10472,-0.01454, -0.10453, -0.20791, -0.30902]
 		
 		# 1) calculate the day of the year
 		

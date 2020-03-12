@@ -150,11 +150,12 @@ while var > 0:
 	plt.axhline(y=0, color='black') # horizon
 	plt.vlines(x=Dawn, ymin = -0.1, ymax = 0.1, color='grey')
 	plt.vlines(x=Dusk, ymin = -0.1, ymax = 0.1, color='grey')
-	plt.vlines(x=Noon, ymin = -0.1, ymax = 0.1, color='grey')
+	plt.vlines(x=Noon, ymin = -0.1, ymax = 0.1, color='gold')
 	plt.vlines(x=Sunrise, ymin = -0.1, ymax = 0.1, color='grey')
 	plt.vlines(x=Sunset, ymin = -0.1, ymax = 0.1, color='grey')
-	plt.vlines(x=GoldenRise, ymin = -0.1, ymax = 0.1, color='grey')
-	plt.vlines(x=GoldenSet, ymin = -0.1, ymax = 0.1, color='grey')
+	plt.vlines(x=GoldenRise, ymin = -0.1, ymax = 0.1, color='gold')
+	plt.vlines(x=GoldenSet, ymin = -0.1, ymax = 0.1, color='gold')
+
 	# only draw hour line if its 1 hours before Dawn and 1 hours after Dusk, otherwise the graph stretches to accommodate the hour line
 	if (dNow > (dDawn - 1)) and (dNow < (dDusk - 1)):
 	#print("within graph")
@@ -170,15 +171,15 @@ while var > 0:
 	ax.text(Noon, 0.15, ''.join(['Noon: ', str(Noon.hour).zfill(2),":",str(Noon.minute).zfill(2)]), ha='center', va='bottom', rotation=90)
 	ax.text(Sunrise, 0.15, ''.join(['Sunrise: ', str(Sunrise.hour).zfill(2),":",str(Sunrise.minute).zfill(2)]), ha='center', va='bottom', rotation=90)
 	ax.text(Sunset, 0.15, ''.join(['Sunset: ', str(Sunset.hour).zfill(2),":",str(Sunset.minute).zfill(2)]), ha='center', va='bottom', rotation=90)
-	ax.text(GoldenRise, 0.7, ''.join(['Golden: ', str(GoldenRise.hour).zfill(2),":",str(GoldenRise.minute).zfill(2)]), ha='right', va='bottom')
-	ax.text(GoldenSet, 0.7, ''.join(['Golden: ', str(GoldenSet.hour).zfill(2),":",str(GoldenSet.minute).zfill(2)]), ha='left', va='bottom')
+	ax.text(GoldenRise, 0.15, ''.join(['Golden: ', str(GoldenRise.hour).zfill(2),":",str(GoldenRise.minute).zfill(2)]), ha='center', va='bottom', rotation=90)
+	ax.text(GoldenSet, 0.15, ''.join(['Golden: ', str(GoldenSet.hour).zfill(2),":",str(GoldenSet.minute).zfill(2)]), ha='center', va='bottom', rotation=90)
 	ax.text(Noon,1.1,''.join(['Length Of Day: ', str(LengthOfDay.hour).zfill(2),":",str(LengthOfDay.minute).zfill(2)]), ha='center', va='bottom')
 
 
 
 	#shade graph as day progresses using adjusted curves
 
-	plt.fill_between(xdnow, 0, y2,interpolate=True, color='blue')
+	plt.fill_between(xdnow, 0, y2,interpolate=True, color='skyblue')
 
 	# autoformat the times
 
