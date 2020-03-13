@@ -12,14 +12,15 @@ import time
 from math import exp
 
 # for reading config files
-from configparser import SafeConfigParser
+import configparser
 import os
 
 # config file location
-CONFIG_FILE=os.path.expanduser('~/Station/config/config.ini')
+CONFIG_FILE=''.join([os.getcwd(),'/config/config.ini'])
 
 # get info from config file
-config = SafeConfigParser()
+config = configparser.ConfigParser()
+config._interpolation = configparser.ExtendedInterpolation()
 config.read(CONFIG_FILE)
 
 # database location

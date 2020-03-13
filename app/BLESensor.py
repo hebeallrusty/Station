@@ -3,15 +3,16 @@ import time
 #import sqlite3
 #from math import exp
 from app.modules.Utilities.PressureCalc import *
-from configparser import SafeConfigParser # for reading ini files
+import configparser # for reading ini files
 import os
 from app.modules.Database.DBUtils import *
 
 # Config file location has to be static
-CONFIG_FILE=os.path.expanduser('~/Station/config/config.ini')
+CONFIG_FILE=''.join([os.getcwd(),'/config/config.ini'])
 
 #print("opening config file")
-config = SafeConfigParser()
+config = configparser.ConfigParser()
+config._interpolation = configparser.ExtendedInterpolation()
 # open config file
 config.read(CONFIG_FILE)
 

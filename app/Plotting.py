@@ -7,16 +7,17 @@ import matplotlib.pyplot as plt
 matplotlib.use('Agg')
 import datetime as dt
 import matplotlib.dates as mdates
-from configparser import SafeConfigParser
+import configparser
 import os
 from app.modules.Database.DBUtils import *
 print("done loading modules")
 
 # Config file location has to be static
-CONFIG_FILE=os.path.expanduser('~/Station/config/config.ini')
+CONFIG_FILE=''.join([os.getcwd(),'/config/config.ini'])
 
 print("opening config file")
-config = SafeConfigParser()
+config = configparser.ConfigParser()
+config._interpolation = configparser.ExtendedInterpolation()
 # print(CONFIG_FILE)
 config.read(CONFIG_FILE)
 

@@ -4,7 +4,7 @@ import os
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from configparser import SafeConfigParser # for reading ini files
+import configparser # for reading ini files
 # use the custom Sunrise module - path may change as things progress
 from modules.Sun.Sun import Sun
 from modules.Utilities.LeapYear import LeapYear
@@ -12,10 +12,11 @@ matplotlib.use('Agg')
 
 
 # Config file location has to be static
-CONFIG_FILE=os.path.expanduser('~/Station/config/config.ini')
+CONFIG_FILE=''.join([os.getcwd(),'/config/config.ini'])
 
 #print("opening config file")
-config = SafeConfigParser()
+config = configparser.ConfigParser()
+config._interpolation = configparser.ExtendedInterpolation()
 # open config file
 config.read(CONFIG_FILE)
 

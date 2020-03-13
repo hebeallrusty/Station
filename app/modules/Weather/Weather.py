@@ -1,5 +1,5 @@
 import pyowm
-from configparser import SafeConfigParser
+import configparser
 import os
 from Bearing import Bearing # converts compass point to bearing such as SW or NE
 from app.modules.Database.DBUtils import *
@@ -8,10 +8,11 @@ import time
 
 
 # Config file location has to be static
-KEY_FILE=os.path.expanduser('~/Station/config/key.ini')
-CONFIG_FILE=os.path.expanduser('~/Station/config/config.ini')
+KEY_FILE=''.join([os.getcwd(),'/config/key.ini'])
+CONFIG_FILE=''.join([os.getcwd(),'/config/config.ini'])
 
-config = SafeConfigParser()
+config = configparser.ConfigParser()
+config._interpolation = configparser.ExtendedInterpolation()
 
 # get api key from file
 config.read(KEY_FILE)
