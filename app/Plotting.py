@@ -12,8 +12,10 @@ import os
 from app.modules.Database.DBUtils import *
 print("done loading modules")
 
+CWD = os.getcwd()
+
 # Config file location has to be static
-CONFIG_FILE=''.join([os.getcwd(),'/config/config.ini'])
+CONFIG_FILE=''.join([CWD,'/config/config.ini'])
 
 print("opening config file")
 config = configparser.ConfigParser()
@@ -25,9 +27,9 @@ config.read(CONFIG_FILE)
 print("setting location of files")
 #databases
 # to do - get database locations from config file
-SENSOR_DATABASE=config.get('files','SensorDatabase')
-WEATHER_DATABASE=config.get('files','WeatherDatabase')
-GRAPH_ROOT=config.get('folder','Graph')
+SENSOR_DATABASE = ''.join([CWD,config.get('files','SensorDatabase')])
+WEATHER_DATABASE = ''.join([CWD,config.get('files','WeatherDatabase')])
+GRAPH_ROOT = ''.join([CWD,config.get('folder','Graph')])
 
 print(SENSOR_DATABASE)
 

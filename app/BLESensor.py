@@ -7,8 +7,10 @@ import configparser # for reading ini files
 import os
 from app.modules.Database.DBUtils import *
 
+CWD = os.getcwd()
+
 # Config file location has to be static
-CONFIG_FILE=''.join([os.getcwd(),'/config/config.ini'])
+CONFIG_FILE=''.join([CWD,'/config/config.ini'])
 
 #print("opening config file")
 config = configparser.ConfigParser()
@@ -21,7 +23,7 @@ config.read(CONFIG_FILE)
 MAC_ADDRESS = config.get('SensorTag','MacAddress')
 
 # get location of Sensor Database
-DATABASE = config.get('files','SensorDatabase')
+DATABASE = ''.join([CWD,config.get('files','SensorDatabase')])
 
 # get location of 
 MSL = float(config.get('location','MetersAboveSeaLevel')) # Elevation above sea level

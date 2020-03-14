@@ -15,8 +15,10 @@ from math import exp
 import configparser
 import os
 
+CWD = os.getcwd()
+
 # config file location
-CONFIG_FILE=''.join([os.getcwd(),'/config/config.ini'])
+CONFIG_FILE=''.join([CWD,'/config/config.ini'])
 
 # get info from config file
 config = configparser.ConfigParser()
@@ -24,7 +26,7 @@ config._interpolation = configparser.ExtendedInterpolation()
 config.read(CONFIG_FILE)
 
 # database location
-DATABASE = config.get('files','SensorDatabase')
+DATABASE = ''.join([CWD,config.get('files','SensorDatabase')])
 print(DATABASE)
 
 # altitude for sea-level calcs later on

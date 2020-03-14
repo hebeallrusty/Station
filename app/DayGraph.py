@@ -17,9 +17,11 @@ matplotlib.use('Agg')
 
 # print(os.getcwd())
 
+CWD = os.getcwd()
+
 # Config file location has to be static
 #CONFIG_FILE=os.path.expanduser('~/Station/config/config.ini')
-CONFIG_FILE=''.join([os.getcwd(),'/config/config.ini'])
+CONFIG_FILE=''.join([CWD,'/config/config.ini'])
 
 #print("opening config file")
 config = configparser.ConfigParser()
@@ -32,7 +34,7 @@ config.read(CONFIG_FILE)
 location = [float(config.get('location','latitude')), float(config.get('location','longitude'))]
 
 # get location of save folder
-GRAPH_ROOT=config.get('folder','Graph')
+GRAPH_ROOT=''.join([CWD,config.get('folder','Graph')])
 # print(GRAPH_ROOT)
 
 # how often script should run (sleep time)

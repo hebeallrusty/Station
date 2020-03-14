@@ -6,10 +6,11 @@ from app.modules.Database.DBUtils import *
 import json
 import time
 
+CWD = os.getcwd()
 
 # Config file location has to be static
-KEY_FILE=''.join([os.getcwd(),'/config/key.ini'])
-CONFIG_FILE=''.join([os.getcwd(),'/config/config.ini'])
+KEY_FILE=''.join([CWD,'/config/key.ini'])
+CONFIG_FILE=''.join([CWD,'/config/config.ini'])
 
 config = configparser.ConfigParser()
 config._interpolation = configparser.ExtendedInterpolation()
@@ -25,8 +26,8 @@ OWM_Key=config.get('OpenWeatherMap','API_Key')
 # read config file
 config.read(CONFIG_FILE)
 
-DATABASE = config.get('files','WeatherDatabase')
-FORECAST_JSON = config.get('files','ForecastJSON')
+DATABASE = ''.join([CWD,config.get('files','WeatherDatabase')])
+FORECAST_JSON = ''.join([CWD,config.get('files','ForecastJSON')])
 
 UPDATE_INTERVAL = int(config.get('general','UpdateInterval'))
 
