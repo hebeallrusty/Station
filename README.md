@@ -60,8 +60,5 @@ install supervisor
 install config files into supervisor config directory
 sudo supervisorctrl reread
 sudo supervisorctrl update
-
-TODO 
-resolve path issues with my username and pi's username hardcoded into config files 
-fix issue with station vs Station when cloned from github
-safeconfigparser is to be depricated
+create user station without sudo privileges and a different password to pi. Add to groups spi, i2c, input, gpio
+Add zram (may need to change all the graphing codes to one module that fires off each module after the last completes if RAM is still an issue)

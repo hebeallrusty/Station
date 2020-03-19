@@ -8,6 +8,7 @@ import configparser # for reading ini files
 # use the custom Sunrise module - path may change as things progress
 from modules.Sun.Sun import Sun
 from modules.Utilities.LeapYear import LeapYear
+from modules.Utilities.DaylightSavingTime import DaylightSavingTime
 matplotlib.use('Agg')
 
 CWD = os.getcwd()
@@ -42,6 +43,7 @@ while var > 0:
 
 	#get current date and time as a reference point
 	Now = dt.datetime.now()
+	
 
 	#get seasons
 	
@@ -60,6 +62,7 @@ while var > 0:
 	for i in range(0,365+LeapYear(Now)):
 		# print(i)
 		x.append(dt.datetime(Now.year,1,1,0,0,0)+dt.timedelta(days=i))
+
 		#print(x[i])
 
 
@@ -67,12 +70,15 @@ while var > 0:
 
 	Midnight = dt.datetime(Now.year,1,1,0,0,0)
 
+	DST = [DaylightSavingTime(x[i]) for i in range(0,365 + LeapYear(Now))]
+	#print(DST)
+
 	# get rise and set for civil twilight and official sun rise/set
-	y_RiseOfficial = [ Midnight + Sun(x[i],location,0).Rise()['Official'] for i in range(0,365 + LeapYear(Now)) ]
-	y_SetOfficial = [ Midnight + Sun(x[i],location,0).Set()['Official'] for i in range(0,365 + LeapYear(Now)) ]
-	y_RiseCivil = [ Midnight + Sun(x[i],location,0).Rise()['Civil'] for i in range(0,365 + LeapYear(Now)) ]
-	y_SetCivil = [ Midnight + Sun(x[i],location,0).Set()['Civil'] for i in range(0,365 + LeapYear(Now)) ]
-	y_Midday = [ Midnight + Sun(x[i],location,0).Transit() for i in range(0,365 + LeapYear(Now)) ]
+	y_RiseOfficial = [ Midnight + Sun(x[i],location,DST[i]).Rise()['Official'] for i in range(0,365 + LeapYear(Now)) ]
+	y_SetOfficial = [ Midnight + Sun(x[i],location,DST[i]).Set()['Official'] for i in range(0,365 + LeapYear(Now)) ]
+	y_RiseCivil = [ Midnight + Sun(x[i],location,DST[i]).Rise()['Civil'] for i in range(0,365 + LeapYear(Now)) ]
+	y_SetCivil = [ Midnight + Sun(x[i],location,DST[i]).Set()['Civil'] for i in range(0,365 + LeapYear(Now)) ]
+	y_Midday = [ Midnight + Sun(x[i],location,DST[i]).Transit() for i in range(0,365 + LeapYear(Now)) ]
 	#print(x[1])
 
 	#print(y_rise)

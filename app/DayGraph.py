@@ -12,6 +12,7 @@ import configparser # for reading ini files
 from modules.Sun.Sun import Sun
 from modules.Sun.SunCurve import SunCurve
 from modules.Utilities.DecimalTime import DecimalTime
+from modules.Utilities.DaylightSavingTime import DaylightSavingTime
 matplotlib.use('Agg')
 #print(time.time()-t0)
 
@@ -50,10 +51,12 @@ while var > 0:
 	# Make "now" static for each run to avoid the problem of an inconsistant date if it clicks over at midnight, and to minimise calls
 
 	now = dt.datetime.today() #- dt.timedelta(hours=6)
+	DST = DaylightSavingTime(now)
+	#print(DST)
 	#print(now)
 
 	# initiate the Sun module
-	s = Sun(now,location,0)
+	s = Sun(now,location,DST)
 
 	#print(s.Rise()['Official'])
 
