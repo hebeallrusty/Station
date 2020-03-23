@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 matplotlib.use('Agg')
 import datetime as dt
 import matplotlib.dates as mdates
+from matplotlib.ticker import ScalarFormatter
 import configparser
 import os
 from app.modules.Database.DBUtils import *
@@ -180,6 +181,7 @@ while var > 0:
 		plt.gcf().autofmt_xdate()
 		# use the textual format set earlier
 		plt.gca().xaxis.set_major_formatter(xfmt)
+		#ax.yaxis.set_major_formatter(ScalarFormatter('%.0f'))
 		# show non-scientific notation on y axis
 		ax.ticklabel_format(useOffset=False, style='plain', axis='y')
 		# save the plot with narrow border
@@ -213,12 +215,13 @@ while var > 0:
 	today = dt.datetime(now.year,now.month,now.day,0,0,0)
 	Sunrise = today + s.Rise()['Official']
 	Sunset = today + s.Set()['Official']
-	LengthOfDay = today + s.LengthOfDay()
 	Dawn = today + s.Rise()['Civil']
 	Dusk = today + s.Set()['Civil']
 	Noon = today + s.Transit()
 	GoldenRise = today + s.Rise()['Golden']
 	GoldenSet = today + s.Set()['Golden']
+	LengthOfDay = today + s.LengthOfDay()
+	# DawnToDusk = today + (s.Set()['Civil'] - s.Rise()['Civil'])
 
 	# datetime object allows individual attributes to be taken such as hour, minute and second. Convert to decimal format for calculations.
 
@@ -228,6 +231,7 @@ while var > 0:
 	dNow = DecimalTime(now) #now.hour + (now.minute / 60)
 	dDawn = DecimalTime(Dawn) #Dawn.hour + (Dawn.minute / 60)
 	dDusk = DecimalTime(Dusk) #Dusk.hour + (Dusk.minute / 60)
+	dDawnToDusk = dDusk - dDawn
 	#dNoon = Noon.hour + (Noon.minute / 60)
 
 
@@ -241,9 +245,10 @@ while var > 0:
 	# x values will be at 15 minute intervals
 	WhenIsNow = 0 # used to determine when "now" is reached in the x value array - used for shading
 	# iterate the number of 15 min intervals between 0 and 3 hrs after the length of day
-	for i in range (0,int((dLengthOfDay + 3)/(15/60))):
-		# start at 1 hr before sunrise and add 15mins and place into an array
-		xval = dt.datetime(now.year,now.month,now.day,int(dSunrise - 1),0,0) + dt.timedelta(minutes=(i * 15))
+	for i in range (0,int((dDawnToDusk + 2)/(15/60))+1):
+		#print(dDawnToDusk + 2)
+		# start at 1 hr before Dawn and add 15mins and place into an array
+		xval = dt.datetime(now.year,now.month,now.day,int(dDawn),0,0) + dt.timedelta(minutes=(i * 15))
 		xd.append(xval)
 		#print((xval.hour + (xval.minute / 60)),"<",dNow)
 		# we need to know the index of when "now" is achieved for the shading logic
@@ -259,7 +264,7 @@ while var > 0:
 		#print("WhenIsNow:",WhenIsNow)
 	
 	# create y values 
-	
+	#print(xd)
 	y = [SunCurve(i,dSunrise,dLengthOfDay) for i in xn ]
 
 
@@ -315,7 +320,7 @@ while var > 0:
 	plt.vlines(x=GoldenSet, ymin = -0.1, ymax = 0.1, color='gold')
 
 	# only draw hour line if its 1 hours before Dawn and 1 hours after Dusk, otherwise the graph stretches to accommodate the hour line
-	if (dNow > (dDawn - 1)) and (dNow < (dDusk - 1)):
+	if (dNow > (dDawn - 1)) and (dNow < (dDusk + 1)):
 	#print("within graph")
 		plt.axvline(x=now, color='red') # time now
 
@@ -426,13 +431,13 @@ while var > 0:
 	ax.grid(which='major', axis='y',linestyle='dotted')
 
 
-	# show where we are in the year
-	plt.axvline(x=now, color='red') # time now
 	# add in seasons lines
 	plt.axvline(x=SPRING,color = 'orange')
 	plt.axvline(x=SUMMER,color = 'orange')
 	plt.axvline(x=AUTUMN,color = 'orange')
 	plt.axvline(x=WINTER,color = 'orange')
+	# show where we are in the year
+	plt.axvline(x=now, color='red') # time now
 
 	# add in season text
 	ax.text(SPRING, dt.datetime(now.year,1,1,12,0), 'Spring', ha='left', va='center', rotation=90)
